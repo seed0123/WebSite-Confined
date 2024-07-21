@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Data</title>
+  <link rel="stylesheet" href="permit.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <style>
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left, .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .header-right form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .device-inputs {
+      display: flex;
+      flex-direction: column;
+    }
+    .workspace-links {
+      display: flex;
+      gap: 20px;
+    }
+    .workspace-links li {
+      list-style: none;
+    }
+    .workspace-links a {
+      text-decoration: none;
+    }
+    .rename-input {
+      margin-left: 10px;
+    }
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 10px;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <header class="header-container">
+    <div class="header-left">
+      <h1 id="permitTitle">Workspace 1</h1>
+    </div>
+    <div class="header-right">
+      <form id="renameForm">
+        <label>Rename Workspace 1: <input type="text" id="renameWorkspace1" placeholder="Enter new name" class="rename-input"></label>
+        <input type="submit" value="Rename Workspace">
+      </form>
+      <form id="deviceForm">
+        <label>Number of Devices: <input type="number" id="numberOfDevices" placeholder="Enter number of devices"></label>
+        <input type="button" id="generateDeviceInputs" value="Generate Device Inputs">
+        <div id="deviceInputsContainer" class="device-inputs"></div>
+        <input type="submit" value="Save Device Names">
+      </form>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+  <main id="deviceContainer">
+    <!-- Devices will be dynamically loaded here -->
+  </main>
+  <div class="chart-container">
+    <canvas id="movementChart"></canvas>
+  </div>
+  <p id="lastUpdated" class="last-updated"></p>
+
+  <footer>
+    <ul class="workspace-links" id="workspaceLinks">
+      <li><a href="permits.html?permit=kilns" id="workspace1Link">Workspace 1</a></li>
+      <li><a href="permits.html?permit=preheaters" id="workspace1Link">Workspace 2</a></li>
+    </ul>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script src="login.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      checkLogin(); // Check login status on page load
+
+      // Load saved name from local storage
+      const savedWorkspace1 = localStorage.getItem('workspace1');
+      const savedDevices = JSON.parse(localStorage.getItem('devices')) || [];
+
+      if (savedWorkspace1) {
+        document.getElementById('workspace1Link').textContent = savedWorkspace1;
+        document.getElementById('permitTitle').textContent = savedWorkspace1;
+      }
+
+      // Load saved device names
+      const deviceInputsContainer = document.getElementById('deviceInputsContainer');
+      savedDevices.forEach((deviceName, index) => {
+        const deviceInput = document.createElement('label');
+        deviceInput.innerHTML = `Device ${index + 1}: <input type="text" name="device${index + 1}" value="${deviceName}" class="rename-input">`;
+        deviceInputsContainer.appendChild(deviceInput);
+      });
+
+      // Handle renaming form submission
+      document.getElementById('renameForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newWorkspace1 = document.getElementById('renameWorkspace1').value;
+
+        if (newWorkspace1) {
+          document.getElementById('workspace1Link').textContent = newWorkspace1;
+          document.getElementById('permitTitle').textContent = newWorkspace1;
+          localStorage.setItem('workspace1', newWorkspace1);
+        }
+      });
+
+      // Handle device input generation
+      document.getElementById('generateDeviceInputs').addEventListener('click', function() {
+        const numberOfDevices = parseInt(document.getElementById('numberOfDevices').value, 10);
+        const deviceInputsContainer = document.getElementById('deviceInputsContainer');
+        deviceInputsContainer.innerHTML = '';
+
+        for (let i = 1; i <= numberOfDevices; i++) {
+          const deviceInput = document.createElement('label');
+          deviceInput.innerHTML = `Device ${i}: <input type="text" name="device${i}" class="rename-input">`;
+          deviceInputsContainer.appendChild(deviceInput);
+        }
+      });
+
+      // Handle device names form submission
+      document.getElementById('deviceForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const deviceInputs = document.querySelectorAll('#deviceInputsContainer input');
+        const deviceNames = Array.from(deviceInputs).map(input => input.value);
+
+        if (deviceNames.length) {
+          localStorage.setItem('devices', JSON.stringify(deviceNames));
+        }
+      });
+    });
+  </script>
+</body>
+</html>

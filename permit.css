@@ -1,0 +1,126 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-left {
+    flex: 1; /* Take remaining space */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.back-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #777;
+}
+
+/* Main content container */
+main {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Device container */
+.device {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 20px); /* Adjust width based on desired layout */
+    transition: transform 0.3s ease;
+}
+
+.device:hover {
+    transform: translateY(-5px);
+}
+
+.device-name {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.device-temperature, .device-movement {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.traffic-light {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 8px;
+}
+
+.red-light {
+    background-color: #ff4d4d;
+}
+
+.orange-light {
+    background-color: #ffa64d;
+}
+
+.green-light {
+    background-color: #4caf50;
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    margin: 20px auto; /* Added margin to provide space around the chart */
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Last updated time */
+.last-updated {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
