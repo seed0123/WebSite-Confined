@@ -7,7 +7,7 @@ let consecutiveSameTemperatureCount = {}; // Track consecutive same temperature 
 const initialCheckAttempts = {}; // Track initial check attempts for each device
 const shapes = ['circle', 'triangle', 'rect', 'cross', 'star', 'line', 'dash'];
 const minX = 2, maxX = 18, minY = 2, maxY = 18; // Coordinate boundaries
-const predefinedChannelIds = ['2573701', '2581068', '2599736'];
+const predefinedChannelIds = ['2604997', '2604999', '2605000'];
 
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
